@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For Darshana ❤️</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,800;1,400&display=swap");
+
+      /* RESET & CORE */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Kanit", sans-serif;
+        background-color: #ffeff5; /* Cute pink base */
+        /* Cutesy background pattern */
+        background-image:
+          radial-gradient(#ff5c5c 1px, transparent 1px),
+          radial-gradient(#ff5c5c 1px, transparent 1px);
+        background-size: 20px 20px;
+        background-position:
+          0 0,
+          10px 10px;
+        cursor: crosshair; /* The requested Crosshair cursor */
+      }
+
+      /* CUSTOM VALORANT-STYLE CROSSHAIR (Optional override) */
+      /* If you want a specific image, replace the url below */
+      /* body { cursor: url('crosshair.png'), crosshair; } */
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 3rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(255, 70, 85, 0.2);
+        border: 2px solid #ff4655; /* Valorant Red */
+        max-width: 600px;
+        position: relative;
+        z-index: 10;
+      }
+
+      h1 {
+        color: #ff4655;
+        font-size: 3rem;
+        text-transform: uppercase;
+        font-style: italic;
+        margin-bottom: 10px;
+        text-shadow: 2px 2px 0px #0f1923;
+      }
+
+      p {
+        color: #0f1923;
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+      }
+
+      /* AGENT HP BARS */
+      .hp-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #555;
+      }
+
+      .hp-bar {
+        width: 100px;
+        height: 8px;
+        background: #e0e0e0;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 5px;
+      }
+
+      .hp-fill {
+        height: 100%;
+        width: 100%;
+      }
+
+      .hp-fill.yes {
+        background-color: #27d188;
+        box-shadow: 0 0 5px #27d188;
+      } /* Viper Green/Heal */
+      .hp-fill.no {
+        background-color: #ff4655;
+        box-shadow: 0 0 5px #ff4655;
+      } /* Val Red */
+
+      /* BUTTONS */
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        position: relative;
+        min-height: 100px; /* Space for the moving button */
+      }
+
+      button {
+        padding: 15px 40px;
+        font-size: 1.5rem;
+        font-family: "Kanit", sans-serif;
+        font-weight: 800;
+        border: none;
+        cursor: pointer; /* Will inherit crosshair generally, but pointer for clicking */
+        text-transform: uppercase;
+        transition: transform 0.1s;
+        position: relative;
+      }
+
+      /* YES BUTTON - The Defuse Button style */
+      .btn-yes {
+        background-color: #0f1923; /* Val Black */
+        color: white;
+        border-bottom: 4px solid #ff4655;
+      }
+
+      .btn-yes:active {
+        transform: translateY(2px);
+        border-bottom: 2px solid #ff4655;
+      }
+
+      /* NO BUTTON - The Enemy */
+      .btn-no {
+        background-color: #ece8e1;
+        color: #ff4655;
+        border: 2px solid #ff4655;
+        position: absolute; /* Allows movement */
+        /* Start position centered relative to group, slightly offset */
+        left: 60%;
+      }
+
+      /* TROLL TEXT */
+      #troll-msg {
+        height: 30px;
+        color: #ff4655;
+        font-weight: bold;
+        margin-top: 20px;
+        font-size: 1rem;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+
+      /* SUCCESS SCREEN */
+      .success-screen {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .valo-gif {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 10px;
+        margin-top: 20px;
+        border: 3px solid #ff4655;
+      }
+      .name {
+        font-family: Arial, Helvetica, sans-serif;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="main-card">
+      <div class="hp-container">
+        <div class="name">
+          DARSHANA
+          <div class="hp-bar"><div class="hp-fill yes"></div></div>
+        </div>
+      </div>
+
+      <h1>Will you be my<br />VAL-entine?</h1>
+      <p>Don't be hardstuck, pick an option.</p>
+
+      <div class="btn-group">
+        <button class="btn-yes" onclick="handleYes()">YES (Defuse)</button>
+        <button class="btn-no" id="no-btn" onmouseover="moveButton()">
+          NO
+        </button>
+      </div>
+
+      <div id="troll-msg"></div>
+    </div>
+
+    <div class="container success-screen" id="success-card">
+      <h1>ACE! 🔫</h1>
+      <p style="font-size: 1.5rem; margin-top: 10px">
+        Let's goooo! <br />
+        Come online tonight for Valo duo? 🎮💕
+      </p>
+      <img
+        src="https://media1.tenor.com/m/K7c-vK7l2uAAAAAC/valorant-wingman.gif"
+        alt="Wingman Happy"
+        class="valo-gif"
+      />
+    </div>
+
+    <script>
+      const noBtn = document.getElementById("no-btn");
+      const trollMsg = document.getElementById("troll-msg");
+
+      // Trash talk lines for when she tries to click No
+      const trashTalk = [
+        "Nice aim iron 1 lol",
+        "Whiffed!",
+        "Precise Gunplay?",
+        "Can't hit a stationary target?",
+        "Uninstall pls",
+        "Lag???",
+        "Nt (nice try)",
+      ];
+
+      function moveButton() {
+        // Get viewport dimensions
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 100);
+        const y =
+          Math.random() * (window.innerHeight - noBtn.offsetHeight - 100);
+
+        noBtn.style.position = "fixed"; // Break out of the container
+        noBtn.style.left = `${x}px`;
+        noBtn.style.top = `${y}px`;
+
+        // Show random trash talk
+        const randomText =
+          trashTalk[Math.floor(Math.random() * trashTalk.length)];
+        trollMsg.innerText = randomText;
+        trollMsg.style.opacity = "1";
+      }
+
+      function handleYes() {
+        document.getElementById("main-card").style.display = "none";
+        document.getElementById("success-card").style.display = "flex";
+
+        // Optional: Add some confetti here if you want to get fancy later
+      }
+    </script>
+  </body>
+</html>
